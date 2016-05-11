@@ -1,2 +1,7 @@
 ---
 # tasks file for sa-mariadb
+
+  - include: tasks_mariadb.yml
+
+  - include: tasks_mariadb_cfg_patch.yml
+ 
