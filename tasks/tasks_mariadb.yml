@@ -16,6 +16,16 @@
     tags:
       - mariadb
 
+
+  - name: MariaDB | Add repo key
+    apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: F1656F24C74CD1D8
+    become: yes
+    when: mariadb_present is failed
+    tags:
+      - mariadb
+
   - name: MariaDB | Add deb repo
     apt_repository: repo='deb http://ams2.mirrors.digitalocean.com/mariadb/repo/{{ mariadb_family }}/ubuntu {{ ansible_distribution_release | lower }} main' state=present
     become: yes
