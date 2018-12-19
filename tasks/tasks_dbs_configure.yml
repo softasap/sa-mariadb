@@ -1,5 +1,11 @@
 ---
 
+  - name: Configuration | install python mysql connector
+    pip: name=MySQL-python state=present
+    become: yes
+    tags:
+      - mysql
+
   - name: Configuration | Create databases
     mysql_db:
       name: "{{ item.name }}"

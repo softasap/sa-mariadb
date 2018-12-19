@@ -48,15 +48,14 @@
       - mariadb
 
   - name: MariaDB | Preset root password
-    debconf: name="mariadb-server-{{mariadb_family}}" question="{{ item }}" vtype="password" value="{{mysql_root_password}}"
-    when: mariadb_present|failed
+    debconf:
+      name: mariadb-server
+      question: "{{ item }}"
+      vtype: password
+      value: "{{ mysql_root_password }}"
     with_items:
-      - mariadb-server/root_password
-      - mariadb-server/root_password_again
-    become: yes
-    when: mariadb_present is failed
-    tags:
-      - mariadb
+      - mysql-server/root_password
+      - mysql-server/root_password_again
 
   - name: MariaDB | Install Server
     apt: update-cache=yes force=yes state=present pkg=mariadb-server
