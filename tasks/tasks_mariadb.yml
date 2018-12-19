@@ -56,6 +56,10 @@
     with_items:
       - mysql-server/root_password
       - mysql-server/root_password_again
+    become: yes
+    when: mariadb_present is failed
+    tags:
+      - mariadb
 
   - name: MariaDB | Install Server
     apt: update-cache=yes force=yes state=present pkg=mariadb-server
