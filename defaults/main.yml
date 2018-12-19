@@ -10,6 +10,7 @@
 
   mysql_host: "127.0.0.1"
   option_harden_mysql: true
+  option_install_python: true
 
   mysql_root_user: root
   mysql_root_password: devroot
