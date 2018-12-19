@@ -3,7 +3,7 @@
 
   mariadb_system_user: mysql
   mariadb_system_group: mysql
-  mariadb_family: "10.1"
+  mariadb_family: "10.3"
   mariadb_bind_to: 127.0.0.1
 
   mysql_host: "127.0.0.1"
