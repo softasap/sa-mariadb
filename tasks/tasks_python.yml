@@ -1,19 +1,26 @@
     - name: Python | install python-pip
-      apt: name=python-pip update_cache=yes state=latest
+      apt: name=python-pip update_cache=yes state=present
+      retries: 3
+      register: result
+      until: not result.failed
       become: yes
       tags:
         -setup
         -python
 
     - name: Python | Update pip
-      shell: pip install -U pip
+      command: pip install -U pip
       become: yes
       tags:
         -setup
         -python
+        -skip_ansible_lint
 
     - name: Python | install python-dev
-      apt: name=python-dev update_cache=yes state=latest
+      apt: name=python-dev update_cache=yes state=present
+      retries: 3
+      register: result
+      until: not result.failed
       become: yes
       tags:
         -setup
