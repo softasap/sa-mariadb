@@ -8,9 +8,13 @@
     ignore_errors: yes
     tags:
       - mariadb
+      - skip_ansible_lint
 
   - name: MariaDB | Add repo key
     apt_key: id=1BB943DB url=http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xCBCB082A1BB943DB state=present
+    retries: 3
+    register: result
+    until: not result.failed
     become: yes
     when: mariadb_present is failed
     tags:
@@ -21,27 +25,27 @@
     apt_key:
       keyserver: keyserver.ubuntu.com
       id: F1656F24C74CD1D8
+    retries: 3
+    register: result
+    until: not result.failed
     become: yes
     when: mariadb_present is failed
     tags:
       - mariadb
 
   - name: MariaDB | Add deb repo
-    apt_repository: repo='deb http://ams2.mirrors.digitalocean.com/mariadb/repo/{{ mariadb_family }}/ubuntu {{ ansible_distribution_release | lower }} main' state=present
+    apt_repository:
+      repo: 'deb http://ams2.mirrors.digitalocean.com/mariadb/repo/{{ mariadb_family }}/ubuntu {{ ansible_distribution_release | lower }} main'
+      state: present
     become: yes
     when: mariadb_present is failed
     tags:
       - mariadb
 
   - name: MariaDB | Add src repo
-    apt_repository: repo='deb-src http://ams2.mirrors.digitalocean.com/mariadb/repo/{{ mariadb_family }}/ubuntu {{ ansible_distribution_release | lower }} main' state=present
-    become: yes
-    when: mariadb_present is failed
-    tags:
-      - mariadb
-
-  - name: MariaDB | update apt cache
-    apt: update_cache=yes
+    apt_repository:
+      repo: 'deb-src http://ams2.mirrors.digitalocean.com/mariadb/repo/{{ mariadb_family }}/ubuntu {{ ansible_distribution_release | lower }} main'
+      state: present
     become: yes
     when: mariadb_present is failed
     tags:
@@ -63,6 +67,9 @@
 
   - name: MariaDB | Install Server
     apt: update-cache=yes force=yes state=present pkg=mariadb-server
+    retries: 3
+    register: result
+    until: not result.failed
     become: yes
     when: mariadb_present is failed
     tags:
@@ -70,6 +77,9 @@
 
   - name: MariaDB | Install Client tools
     apt: update-cache=yes force=yes state=present pkg=mariadb-client
+    retries: 3
+    register: result
+    until: not result.failed
     become: yes
     when: mariadb_present is failed
     tags:

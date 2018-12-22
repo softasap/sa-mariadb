@@ -7,7 +7,7 @@
   - include: tasks_mariadb.yml
 
   - include: tasks_mariadb_cfg_patch.yml
- 
+
   - include: tasks_mysql_harden.yml
     when: option_harden_mysql
 
