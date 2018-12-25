@@ -1,10 +1,41 @@
 ---
+  - name: Check mysql config
+    command: test -e /usr/bin/mysql_config
+    ignore_errors: true
+    changed_when: False
+    register: mysql_config_exists
+
+# todo
+#  - name: Install libmariadbclient-dev
+#    apt: name="libmariadbclient-dev" state="present"
+#    retries: 3
+#    register: result
+#    until: not result is failed
+#    become: yes
+#    when: mysql_config_exists is failed
+#
+#  - name: link  /usr/bin/mariadb_config to /usr/bin/mysql_config
+#    file:
+#      src: /usr/bin/mariadb_config
+#      dest: /usr/bin/mysql_config
+#      state: link
+#    become: yes
+#    when: mysql_config_exists is failed
+
+  - name: Install libmysqlclient-dev
+    apt: name="libmysqlclient-dev" state="present"
+    retries: 3
+    register: result
+    until: not result is failed
+    become: yes
+    when: mysql_config_exists is failed
+
 
   - name: Configuration | install python mysql connector
     pip: name=MySQL-python state=present
     retries: 3
     register: result
-    until: not result.failed
+    until: not result is failed
     become: yes
     tags:
       - mysql
