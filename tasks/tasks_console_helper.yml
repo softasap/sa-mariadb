@@ -4,7 +4,7 @@
     package: name="grc" state="present"
     retries: 3
     register: result
-    until: not result.failed
+    until: not result is failed
     become: yes
     tags: mysql
 
