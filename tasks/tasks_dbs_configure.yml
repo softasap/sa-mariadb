@@ -30,9 +30,33 @@
     become: yes
     when: mysql_config_exists is failed
 
+  - name: For troubleshouting, output ansible_python_version
+    debug: var="ansible_python_version"
+
+  - name: Install setup tools(2)
+    package:
+       name:
+         - python-setuptools
+         - python-pip
+       state: present
+    when: ansible_python_version is version_compare('3','<')
+    become: yes
+    tags:
+      - mysql
+
+  - name: Install setup tools(3)
+    package:
+       name:
+         - python3-setuptools
+         - python3-pip
+       state: present
+    when: ansible_python_version is version_compare('3','>=')
+    become: yes
+    tags:
+      - mysql
 
   - name: Configuration | install python mysql connector
-    pip: name=MySQL-python state=present
+    pip: name=pymysql state=present
     retries: 3
     register: result
     until: not result is failed
