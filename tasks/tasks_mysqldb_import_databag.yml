@@ -5,3 +5,4 @@
     creates: /vagrant/databag/db/.nodbs
   tags:
     -dbimport   
+    -skip_ansible_lint

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MYSQL_ROOT_PASSWORD=devroot
+MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-{{ mysql_root_password }}}
 
 SECURE_MYSQL=$(expect -c "
 set timeout 10

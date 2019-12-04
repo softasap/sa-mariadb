@@ -14,7 +14,7 @@
     apt_key: id=1BB943DB url=http://keyserver.ubuntu.com/pks/lookup?op=get&search=0xCBCB082A1BB943DB state=present
     retries: 3
     register: result
-    until: not result.failed
+    until: not result is failed
     become: yes
     when: mariadb_present is failed
     tags:
@@ -27,7 +27,7 @@
       id: F1656F24C74CD1D8
     retries: 3
     register: result
-    until: not result.failed
+    until: not result is failed
     become: yes
     when: mariadb_present is failed
     tags:
@@ -69,7 +69,7 @@
     apt: update-cache=yes force=yes state=present pkg=mariadb-server
     retries: 3
     register: result
-    until: not result.failed
+    until: not result is failed
     become: yes
     when: mariadb_present is failed
     tags:
@@ -79,7 +79,7 @@
     apt: update-cache=yes force=yes state=present pkg=mariadb-client
     retries: 3
     register: result
-    until: not result.failed
+    until: not result is failed
     become: yes
     when: mariadb_present is failed
     tags:
